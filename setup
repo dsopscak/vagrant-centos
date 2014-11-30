@@ -47,7 +47,12 @@ setup_ruby() {
     set +e
 
     SOURCE=$(which vagrant)
-    if [ $? -eq 0 ]; then
+    #if [ $? -eq 0 ]; then
+    # this depends on the pathed vagrant being a symlink to where the
+    # real installation is. But some (recent rpm's) vagrant install
+    # methods have this as a real file wrapper script
+    # (/usr/bin/vagrant). logic it out and use system ruby.
+    if [ 1 -eq 0 ]; then
         while [ -h "$SOURCE" ] ; do SOURCE="$(readlink "$SOURCE")"; done
         EMBEDDED_DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )/../embedded"
 
